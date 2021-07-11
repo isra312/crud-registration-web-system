@@ -8,14 +8,16 @@ namespace crud_registration_web_system.Models
     {
         public int Id { get; set; }
 
+        [Required]
         [Display(Name = "Fornecedor")]
         public string Supplier { get; set; }
         // public IEnumerable<SelectListItem> Suppliers { get; set; }
         
+        [Required]
         [Display(Name = "UC da Usina")]
         public string ConsumerUnit { get; set; }
         
-
+        [Required]
         [Display(Name = "Ativo")]
         public bool Active{get;set;} = true;
    }
