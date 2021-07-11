@@ -4,7 +4,41 @@
     ViewData["Title"] = "Editar Usina";
 }
 
-<h1>Edit</h1>
+@{
+   List<SelectListItem> listItems= new List<SelectListItem>();
+   listItems.Add(new SelectListItem
+        {
+          Text = "SOLARIAN",
+          Value = "SOLARIAN"
+        });
+   listItems.Add(new SelectListItem
+        {
+            Text = "FUTURA",
+            Value = "FUTURA",
+            Selected = true
+        });
+   listItems.Add(new SelectListItem
+        {
+            Text = "CENTRAL GERADORA FAZENDA MODELO",
+            Value = "CENTRAL GERADORA FAZENDA MODELO"
+        });
+           listItems.Add(new SelectListItem
+        {
+          Text = "NOVA MUNDO",
+          Value = "NOVA MUNDO"
+        });
+   listItems.Add(new SelectListItem
+        {
+            Text = "SOLARE",
+            Value = "SOLARE",
+            Selected = true
+        });
+   listItems.Add(new SelectListItem
+        {
+            Text = "UNISOL",
+            Value = "UNISOL"
+        });
+}
 
 <h1>Editar Usina</h1>
 
