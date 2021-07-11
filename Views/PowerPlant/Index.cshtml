@@ -1,44 +1,48 @@
 @model IEnumerable<crud_registration_web_system.Models.PowerPlant>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listagem de Usinas de Geração Distribuída";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Cadastrar</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ConsumerUnit)
+                @Html.DisplayNameFor(model => model.Supplier)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Supplier)
+                @Html.DisplayNameFor(model => model.ConsumerUnit)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Active)
             </th>
-            <th></th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ConsumerUnit)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Supplier)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Active)
+                @Html.DisplayFor(modelItem => item.ConsumerUnit)
+            </td>
+            <td>
+                <label class="switch">
+                    @Html.DisplayFor(modelItem => item.Active)
+                    <div class="slider round">
+                    </div>
+                </label>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <!--<a asp-action="Details" asp-route-id="@item.Id">Details</a> | -->
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

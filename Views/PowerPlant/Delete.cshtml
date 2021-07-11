@@ -1,7 +1,7 @@
 @model crud_registration_web_system.Models.PowerPlant
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Excluir Usina";
 }
 
 <h1>Delete</h1>
@@ -12,22 +12,25 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ConsumerUnit)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ConsumerUnit)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Supplier)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Supplier)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ConsumerUnit)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ConsumerUnit)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Active)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Active)
+            <label class="switch">
+                @Html.DisplayFor(model => model.Active)
+                <div class="slider round"></div>
+            </label>
         </dd>
     </dl>
     
