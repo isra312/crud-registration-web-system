@@ -58,7 +58,6 @@ namespace crud_registration_web_system.Controllers
             return View(powerPlantSupplierVM);
         }
 
-
         // GET: PowerPlant/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -92,7 +91,8 @@ namespace crud_registration_web_system.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(_context.PowerPlant.Any(plant => plant.Supplier == powerPlant.Supplier && plant.ConsumerUnit == powerPlant.ConsumerUnit))
+                if(_context.PowerPlant.Any(plant => plant.Supplier == powerPlant.Supplier && 
+                                                    plant.ConsumerUnit == powerPlant.ConsumerUnit))
                 {
                     return ValidationProblem();
                 }
@@ -137,7 +137,9 @@ namespace crud_registration_web_system.Controllers
                 try
                 {
 
-                if(_context.PowerPlant.Any(plant => plant.Supplier == powerPlant.Supplier && plant.ConsumerUnit == powerPlant.ConsumerUnit && plant.Id!= powerPlant.Id))
+                if(_context.PowerPlant.Any(plant => plant.Supplier == powerPlant.Supplier && 
+                                                    plant.ConsumerUnit == powerPlant.ConsumerUnit &&
+                                                    plant.Id!= powerPlant.Id))
                 {
                     return ValidationProblem();
                 }

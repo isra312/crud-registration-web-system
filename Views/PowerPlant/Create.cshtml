@@ -5,7 +5,7 @@
 }
 
 @{
-   List<SelectListItem> listItems= new List<SelectListItem>();
+   List<SelectListItem> listItems = new List<SelectListItem>();
    listItems.Add(new SelectListItem
         {
           Text = "SOLARIAN",
@@ -48,6 +48,13 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group form-check">
+                @Html.DisplayNameFor(model => model.Active)  
+                <label class="switch">
+                    <input type="checkbox" class="form-check-input switch" asp-for="Active" checked >
+                    <span class="slider round"></span>
+                </label>  
+            </div>
             <div class="form-group">
                 <label asp-for="Supplier" class="control-label"></label>
                 @Html.DropDownListFor(model => model.Supplier, listItems, "-- Selecione o Fornecedor --")
@@ -56,13 +63,6 @@
                 <label asp-for="ConsumerUnit" class="control-label"></label>
                 <input asp-for="ConsumerUnit" class="form-control" />
                 <span asp-validation-for="ConsumerUnit" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="switch">
-                    <input type="checkbox" class="form-check-input switch" asp-for="Active" checked >
-                    <span class="slider round"></span>
-                     @Html.DisplayNameFor(model => model.Active)  
-                </label>  
             </div>
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />

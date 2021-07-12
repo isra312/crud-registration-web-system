@@ -11,7 +11,6 @@ namespace crud_registration_web_system.Models
         [Required]
         [Display(Name = "Fornecedor")]
         public string Supplier { get; set; }
-        // public IEnumerable<SelectListItem> Suppliers { get; set; }
         
         [Required]
         [Display(Name = "UC da Usina")]
