@@ -18,11 +18,46 @@ namespace crud_registration_web_system.Controllers
             _context = context;
         }
 
-        // GET: PowerPlant
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string supplierName, string searchString, string activationStatus)
         {
-            return View(await _context.PowerPlant.ToListAsync());
+            IQueryable<string> supplierQuery = from p in _context.PowerPlant
+                                        orderby p.Supplier
+                                        select p.Supplier;
+
+            IQueryable<string> activationQuery = from p in _context.PowerPlant
+                                        orderby p.Active
+                                        select p.Active.ToString();
+
+
+            var powerPlants = from p in _context.PowerPlant
+                            select p;
+
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                powerPlants = powerPlants.Where(s => s.ConsumerUnit.Contains(searchString));
+            }
+
+            if(!string.IsNullOrEmpty(supplierName))
+            {
+                powerPlants = powerPlants.Where(s => s.Supplier == supplierName);
+            }
+
+            if(!string.IsNullOrEmpty(activationStatus))
+            {
+                bool activationBool = activationStatus.Equals("True", StringComparison.CurrentCultureIgnoreCase) ? true : false;
+                powerPlants = powerPlants.Where(s => s.Active == activationBool);
+            }
+
+            var powerPlantSupplierVM = new PowerPlantSupplier
+            {
+                Suppliers = new SelectList(await supplierQuery.Distinct().ToListAsync()),
+                ActivationStatuses = new SelectList(await activationQuery.Distinct().ToListAsync()),
+                PowerPlants = await powerPlants.ToListAsync()
+            };
+
+            return View(powerPlantSupplierVM);
         }
+
 
         // GET: PowerPlant/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -57,6 +92,11 @@ namespace crud_registration_web_system.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(_context.PowerPlant.Any(plant => plant.Supplier == powerPlant.Supplier && plant.ConsumerUnit == powerPlant.ConsumerUnit))
+                {
+                    return ValidationProblem();
+                }
+
                 _context.Add(powerPlant);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,6 +136,12 @@ namespace crud_registration_web_system.Controllers
             {
                 try
                 {
+
+                if(_context.PowerPlant.Any(plant => plant.Supplier == powerPlant.Supplier && plant.ConsumerUnit == powerPlant.ConsumerUnit && plant.Id!= powerPlant.Id))
+                {
+                    return ValidationProblem();
+                }
+
                     _context.Update(powerPlant);
                     await _context.SaveChangesAsync();
                 }

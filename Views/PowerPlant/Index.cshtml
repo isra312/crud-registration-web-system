@@ -1,4 +1,4 @@
-@model IEnumerable<crud_registration_web_system.Models.PowerPlant>
+@model crud_registration_web_system.Models.PowerPlantSupplier
 
 @{
     ViewData["Title"] = "Listagem de Usinas de Geração Distribuída";
@@ -6,26 +6,47 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Cadastrar</a>
-</p>
+
+<form asp-controller="PowerPlant" asp-action="Index" method="get">
+    <p>
+        Fornecedor: 
+        <select asp-items="Model.Suppliers" asp-for="SupplierName">
+            <option value="">Todos</option>
+        </select>
+
+        UC da Usina:
+        <input type="text" asp-for="SearchString" />
+
+        Ativo: 
+        <select asp-items="Model.ActivationStatuses" asp-for="ActivationStatus">
+            <option value="">Todos</option>
+        </select>
+
+        <p>
+            <a asp-action="Create">Cadastrar</a>
+            <input type="submit" value="Filtrar Dados" />
+        </p>
+
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Supplier)
+                @Html.DisplayNameFor(model => model.PowerPlants[0].Supplier)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ConsumerUnit)
+                @Html.DisplayNameFor(model => model.PowerPlants[0].ConsumerUnit)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Active)
+                @Html.DisplayNameFor(model => model.PowerPlants[0].Active)
             </th>
             <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.PowerPlants) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Supplier)
@@ -41,9 +62,18 @@
                 </label>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+
+            <div class="dropdown">
+            <a class="btn-menu"><i class="fa fa-bars"></i></a>
+            <div class="dropdown-content">
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
                 <!--<a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> | -->
                 <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+            </div>
+
+                @* <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <!--<a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> | -->
+                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a> *@
             </td>
         </tr>
 }

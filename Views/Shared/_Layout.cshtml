@@ -6,7 +6,10 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 <style>
     .switch {
     position: relative;
@@ -68,6 +71,69 @@
     border-radius: 50%;
     }
 
+    .btn-menu {
+    font-size: .75rem;
+    padding: .75rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-radius: 0%;
+    }
+
+    .btn-menu:link {
+    color: #56a5eb;
+    }
+
+    .btn-menu[disabled]:hover {
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    }
+
+    .btn-menu:hover {
+    cursor: pointer;
+    box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+    transition: transform 150ms;
+    }
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+    position: absolute;
+    width: 2;
+    height: .5;
+    }
+
+    .dropdown:hover {
+    cursor: pointer;
+    transform: translateY(-0.5rem);
+    transition: transform 150ms;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 10px;
+    
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        padding: 0.25rem;
+        text-align: justify;
+        display: block;
+    }
+
+    /* Change color of dropdown links on hover */
+    .dropdown-content a:hover {
+    background-color: #56a5eb;
+    color: white;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+    display: block;
+    }
+
 </style>
 </head>
 <body>
@@ -90,7 +156,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - Listagem de Usinas de Geração Distribuída - <a asp-area="" asp-controller="Home" asp-action="Sobre">About</a>
+            &copy; 2021 - Listagem de Usinas de Geração Distribuída - Developed by Israel Aires
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

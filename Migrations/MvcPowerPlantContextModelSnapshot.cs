@@ -24,9 +24,11 @@ namespace crud_registration_web_system.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ConsumerUnit")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Supplier")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
