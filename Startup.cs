@@ -68,7 +68,7 @@ namespace crud_registration_web_system
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=PowerPlant}/{action=Index}/{SupplierName?}/{SearchString?}/{ActivationStatus?}");
+                    pattern: "{controller=PowerPlant}/{action=Index}/{SupplierName?}/{SearchString?}/{Active?}");
             }); 
         }
     }

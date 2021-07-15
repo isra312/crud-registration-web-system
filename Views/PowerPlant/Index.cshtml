@@ -10,16 +10,18 @@
 <form asp-controller="PowerPlant" asp-action="Index" method="get">
     <p>
         Fornecedor: 
-        <select asp-items="Model.Suppliers" asp-for="SupplierName">
+        <select asp-items="Model.Suppliers" asp-for="Supplier">
             <option value="">Todos</option>
         </select>
 
         UC da Usina:
-        <input type="text" asp-for="SearchString" />
+        <input type="text" asp-for="ConsumerUnit" />
 
         Ativo: 
-        <select asp-items="Model.ActivationStatuses" asp-for="ActivationStatus">
-            <option value="">Todos</option>
+        <select asp-for="Active">
+            <option >Todos</option>
+            <option value=1>Ativo</option>
+            <option value=0>Inativo</option>
         </select>
 
         <p>

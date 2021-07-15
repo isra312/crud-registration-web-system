@@ -11,47 +11,50 @@ namespace crud_registration_web_system.Controllers
 {
     public class PowerPlantController : Controller
     {
-        private readonly MvcPowerPlantContext _context;
+        private readonly MvcPowerPlantContext _context;       
 
         public PowerPlantController(MvcPowerPlantContext context)
         {
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string supplierName, string searchString, string activationStatus)
+        public SelectList GetSuppliers()
         {
+           List<SelectListItem> suppliers = _context.Supplier.AsNoTracking()
+               .OrderBy(s => s.Name)
+               .Select(s =>
+                   new SelectListItem
+                   {
+                      Value = s.Id.ToString(),
+                      Text = s.Name
+                   }).ToList();
+           return new SelectList(suppliers, "Text", "Text");
+        }
+
+        public async Task<IActionResult> Index(string supplier, string consumerUnit, int? active)
+        {
+
             IQueryable<string> supplierQuery = from p in _context.PowerPlant
                                         orderby p.Supplier
                                         select p.Supplier;
 
-            IQueryable<string> activationQuery = from p in _context.PowerPlant
-                                        orderby p.Active
-                                        select p.Active.ToString();
-
-
             var powerPlants = from p in _context.PowerPlant
                             select p;
 
-            if(!string.IsNullOrEmpty(searchString))
-            {
-                powerPlants = powerPlants.Where(s => s.ConsumerUnit.Contains(searchString));
-            }
+            if(!string.IsNullOrEmpty(consumerUnit))
+                powerPlants = powerPlants.Where(s => s.ConsumerUnit.Contains(consumerUnit));
 
-            if(!string.IsNullOrEmpty(supplierName))
-            {
-                powerPlants = powerPlants.Where(s => s.Supplier == supplierName);
-            }
+            if(!string.IsNullOrEmpty(supplier))
+                powerPlants = powerPlants.Where(p => p.Supplier == supplier);
 
-            if(!string.IsNullOrEmpty(activationStatus))
+            if(!(active is null))
             {
-                bool activationBool = activationStatus.Equals("True", StringComparison.CurrentCultureIgnoreCase) ? true : false;
-                powerPlants = powerPlants.Where(s => s.Active == activationBool);
+                powerPlants = powerPlants.Where(p => p.Active == (active != 0));
             }
 
             var powerPlantSupplierVM = new PowerPlantSupplier
             {
-                Suppliers = new SelectList(await supplierQuery.Distinct().ToListAsync()),
-                ActivationStatuses = new SelectList(await activationQuery.Distinct().ToListAsync()),
+                Suppliers = GetSuppliers(),
                 PowerPlants = await powerPlants.ToListAsync()
             };
 
@@ -79,7 +82,12 @@ namespace crud_registration_web_system.Controllers
         // GET: PowerPlant/Create
         public IActionResult Create()
         {
-            return View();
+            var powerPlantSupplierVM = new PowerPlantSupplier
+            {
+                Suppliers = GetSuppliers()
+            };
+
+            return View(powerPlantSupplierVM);
         }
 
         // POST: PowerPlant/Create
@@ -117,7 +125,18 @@ namespace crud_registration_web_system.Controllers
             {
                 return NotFound();
             }
-            return View(powerPlant);
+
+            var powerPlantSupplierVM = new PowerPlantSupplier
+            {
+                Suppliers = GetSuppliers(),//new SelectList(await supplierQuery.Distinct().ToListAsync()),
+                Supplier = powerPlant.Supplier,
+                ConsumerUnit = powerPlant.ConsumerUnit,
+                Active = powerPlant.Active,
+                PowerPlants = (new List<PowerPlant>())
+            };
+            powerPlantSupplierVM.PowerPlants.Add(powerPlant);
+
+            return View(powerPlantSupplierVM);
         }
 
         // POST: PowerPlant/Edit/5
@@ -160,7 +179,18 @@ namespace crud_registration_web_system.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(powerPlant);
+            var powerPlantSupplierVM = new PowerPlantSupplier
+            {
+                Suppliers = GetSuppliers(),//new SelectList(await supplierQuery.Distinct().ToListAsync()),
+                Supplier = powerPlant.Supplier,
+                ConsumerUnit = powerPlant.ConsumerUnit,
+                Active = powerPlant.Active,
+                PowerPlants = (new List<PowerPlant>())
+            };
+            powerPlantSupplierVM.PowerPlants.Add(powerPlant);
+
+            return View(powerPlantSupplierVM);
+
         }
 
         // GET: PowerPlant/Delete/5
